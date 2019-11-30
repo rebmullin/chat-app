@@ -7,14 +7,7 @@ const firebase = require("firebase");
 require("firebase/firestore");
 
 firebase.initializeApp({
-  apiKey: "AIzaSyB3YRI8bMDSDgEfjefEuTp_OSTUPq5070Y",
-  authDomain: "chat-9b0d3.firebaseapp.com",
-  databaseURL: "https://chat-9b0d3.firebaseio.com",
-  projectId: "chat-9b0d3",
-  storageBucket: "chat-9b0d3.appspot.com",
-  messagingSenderId: "494201171892",
-  appId: "1:494201171892:web:8fdf2fcfdacff747328ce1",
-  measurementId: "G-M98T5JT0HP"
+  // app info...
 });
 
 class Chat extends React.Component {
