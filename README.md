@@ -20,7 +20,7 @@ start create and start your project:
 1. `expo init [app-name]`
    - answer the questions that come up (I believe the defaults are what I used for this)
 2. `expo start` (this will open up a new tab in your browser)
-3. Open up your phone and your point your camera towards the QR code scanner. This will send some kind of notification message on your phone which will open up expo and show your app on your phone.
+3. Open up your phone and your point your camera towards the QR code scanner. This will send some kind of notification message on your phone which you can tap on. This will open up expo and show your app on your phone.
 
 ### You can also use the following simulators/emulators to help with your development/testing.
 
