@@ -1,13 +1,9 @@
-import React from "react";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Start from "./components/Start";
 import Chat from "./components/Chat";
 
-// const firebase = require("firebase");
-// require("firebase/firestore");
-
-// Create the navigator
+//  Create the navigator
 const navigator = createStackNavigator({
   Start: { screen: Start },
   Chat: { screen: Chat }
