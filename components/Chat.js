@@ -21,50 +21,29 @@ class Chat extends React.Component {
 
   state = {
     messages: [],
-    id: null,
+    uid: null,
     isConnected: true
   };
 
   componentDidMount() {
+    // AsyncStorage.removeItem("messages");
+
+    this.getMessages();
+
     NetInfo.isConnected.fetch().then(isConnected => {
+      this.unsubscribeMessageUser = this.messages.onSnapshot(
+        this.onCollectionUpdate
+      );
+
       if (isConnected) {
         this.setState({
           isConnected: true,
           loading: true
         });
-
-        this.authUnsubscribe = firebase
-          .auth()
-          .onAuthStateChanged(async user => {
-            if (!user) {
-              try {
-                await firebase.auth().signInAnonymously();
-              } catch (error) {
-                console.error(error);
-              }
-            }
-
-            // update user state with currently active user data
-            this.setState({
-              id: user.uid,
-              loading: false
-            });
-
-            // create a reference to the active user's documents (shopping lists)
-            this.messagesUser = firebase
-              .firestore()
-              .collection("messages")
-              .where("uid", "==", user.uid || this.state.id);
-
-            this.unsubscribeMessageUser = this.messagesUser.onSnapshot(
-              this.onCollectionUpdate
-            );
-          });
       } else {
         this.setState({
           isConnected: false
         });
-        this.getMessages();
       }
     });
   }
@@ -109,7 +88,7 @@ class Chat extends React.Component {
     this.messages.add({
       text: message.text,
       createdAt: message.createdAt,
-      userId: this.state.id
+      uid: this.state.uid
     });
   };
 
@@ -128,12 +107,30 @@ class Chat extends React.Component {
 
   saveMessages = async () => {
     try {
-      await AsyncStorage.setItem(
-        "messages",
-        JSON.stringify(this.state.messages)
-      );
+      // firebase
+      //   .firestore()
+      //   .collection("messages")
+      //   .get()
+      //   .then(async querySnapshot => {
+      //     const messages = [];
+      //     querySnapshot.forEach(doc => {
+      //       const data = doc.data();
+      //       messages.push({
+      //         _id: Math.round(Math.random() * 1000000),
+      //         text: data.text,
+      //         createdAt: data.createdA.seconds,
+      //         system: data.system
+      //       });
+      //     });
+
+      //     this.setState({
+      //       messages
+      //     });
+
+      await AsyncStorage.setItem("messages", JSON.stringify(messages));
+      //  });
     } catch (err) {
-      console.error(err.message);
+      console.log(err);
     }
   };
 
@@ -191,7 +188,7 @@ class Chat extends React.Component {
             messages={this.state.messages}
             onSend={messages => this.onSend(messages)}
             user={{
-              _id: this.state.id
+              _id: this.state.uid
             }}
           />
           {Platform.OS === "android" ? <KeyboardSpacer /> : null}
